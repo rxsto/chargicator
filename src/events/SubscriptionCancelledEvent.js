@@ -1,5 +1,7 @@
 const WebhookEvent = require('../../lib/webhook/events/WebhookEvent');
 
+const ms = require('ms');
+
 class SubscriptionCancelledEvent extends WebhookEvent {
 
   constructor(client) {
@@ -24,6 +26,26 @@ class SubscriptionCancelledEvent extends WebhookEvent {
               name: 'Plan',
               value: `${content.subscription.plan_quantity} x ${content.subscription.plan_id}`,
               inline: false
+            },
+            {
+              name: 'Creation date',
+              value: `${this.formatDate(content.subscription.created_at)}`,
+              inline: false
+            },
+            {
+              name: 'Cancellation date',
+              value: `${this.formatDate(content.subscription.cancelled_at)}`,
+              inline: false
+            },
+            {
+              name: 'Active term',
+              value: `${this.formatTime(content.subscription.cancelled_at - content.subscription.created_at)}`,
+              inline: false
+            },
+            {
+              name: 'Due invoices',
+              value: `${content.subscription.due_invoices_count}`,
+              inline: false
             }
           ],
           timestamp: new Date(event.occurred_at * 1000)
@@ -40,6 +62,14 @@ class SubscriptionCancelledEvent extends WebhookEvent {
     this.client.webhookPoster.post(data);
 
     this.client.summaryHandler.cache.subscriptionCancellations++;
+  }
+
+  formatDate(date) {
+    return new Date(date * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+  }
+
+  formatTime(time) {
+    return ms(time * 1000, { long: true });
   }
 }
 
