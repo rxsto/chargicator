@@ -24,6 +24,11 @@ class SubscriptionCreatedEvent extends WebhookEvent {
               name: 'Plan',
               value: `${content.subscription.plan_quantity} x ${content.subscription.plan_id}`,
               inline: false
+            },
+            {
+              name: 'Next billing',
+              value: `${this.formatDate(content.subscription.next_billing_at)}`,
+              inline: false
             }
           ],
           timestamp: new Date(event.occurred_at * 1000)
@@ -40,6 +45,10 @@ class SubscriptionCreatedEvent extends WebhookEvent {
     this.client.webhookPoster.post(data);
 
     this.client.summaryHandler.cache.subscriptionCreations++;
+  }
+
+  formatDate(date) {
+    return new Date(date * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
   }
 }
 
