@@ -1,9 +1,9 @@
 const WebhookEvent = require('../../lib/webhook/events/WebhookEvent');
 
-class SubscriptionCancellationScheduledEvent extends WebhookEvent {
+class SubscriptionScheduledCancellationRemoved extends WebhookEvent {
 
   constructor(client) {
-    super(client, 'subscription_cancellation_scheduled');
+    super(client, 'subscription_scheduled_cancellation_removed');
   }
 
   async run(event) {
@@ -12,7 +12,7 @@ class SubscriptionCancellationScheduledEvent extends WebhookEvent {
     const data = {
       embeds: [
         {
-          title: 'Subscription cancellation scheduled',
+          title: 'Subscription cancellation schedule removed',
           color: 0x8a8a8a,
           fields: [
             {
@@ -29,21 +29,6 @@ class SubscriptionCancellationScheduledEvent extends WebhookEvent {
               name: 'Creation date',
               value: `${this.formatDate(content.subscription.created_at)}`,
               inline: false
-            },
-            {
-              name: 'Cancellation date',
-              value: `${this.formatDate(content.subscription.cancelled_at)}`,
-              inline: false
-            },
-            {
-              name: 'Active term',
-              value: `${this.formatTime(content.subscription.cancelled_at - content.subscription.created_at)}`,
-              inline: false
-            },
-            {
-              name: 'Due invoices',
-              value: `${content.subscription.due_invoices_count}`,
-              inline: false
             }
           ],
           timestamp: new Date(event.occurred_at * 1000)
@@ -59,7 +44,7 @@ class SubscriptionCancellationScheduledEvent extends WebhookEvent {
 
     this.client.webhookPoster.post(data);
 
-    this.client.summaryHandler.cache.subscriptionCancellationSchedules++;
+    this.client.summaryHandler.cache.subscriptionCancellationScheduleRemovals++;
   }
 
   formatDate(date) {
@@ -67,4 +52,4 @@ class SubscriptionCancellationScheduledEvent extends WebhookEvent {
   }
 }
 
-module.exports = SubscriptionCancellationScheduledEvent;
+module.exports = SubscriptionScheduledCancellationRemoved;

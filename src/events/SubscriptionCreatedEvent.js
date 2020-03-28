@@ -12,7 +12,7 @@ class SubscriptionCreatedEvent extends WebhookEvent {
     const data = {
       embeds: [
         {
-          description: '**Subscription created**',
+          title: 'Subscription created',
           color: 0xFF6C36,
           fields: [
             {

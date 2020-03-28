@@ -14,7 +14,7 @@ class SubscriptionCancelledEvent extends WebhookEvent {
     const data = {
       embeds: [
         {
-          description: '**Subscription cancelled**',
+          title: 'Subscription cancelled',
           color: 0x8a8a8a,
           fields: [
             {
