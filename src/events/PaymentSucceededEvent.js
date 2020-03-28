@@ -7,6 +7,7 @@ class PaymentSucceededEvent extends WebhookEvent {
   }
 
   async run() {
+    console.info('Payment succeeded!');
     this.client.summaryHandler.cache.paymentSuccesses++;
   }
 }

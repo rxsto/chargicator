@@ -7,6 +7,7 @@ class SubscriptionCreatedEvent extends WebhookEvent {
   }
 
   async run(event) {
+    console.info('Subscription created!');
     const content = event.content;
     const user = await this.client.discordManager.getUser(content.customer.id);
     const data = {

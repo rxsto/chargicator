@@ -7,6 +7,7 @@ class PaymentFailedEvent extends WebhookEvent {
   }
 
   async run() {
+    console.info('Payment failed!');
     this.client.summaryHandler.cache.paymentFailures++;
   }
 }

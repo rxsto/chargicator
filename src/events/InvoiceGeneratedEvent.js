@@ -7,6 +7,7 @@ class InvoiceGeneratedEvent extends WebhookEvent {
   }
 
   async run() {
+    console.info('New invoice generated!');
     this.client.summaryHandler.cache.invoiceGenerations++;
   }
 }

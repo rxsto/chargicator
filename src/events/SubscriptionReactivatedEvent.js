@@ -7,6 +7,7 @@ class SubscriptionReactivatedEvent extends WebhookEvent {
   }
 
   async run() {
+    console.info('Subscription reactivated!');
     this.client.summaryHandler.cache.subscriptionReactivations++;
   }
 }

@@ -7,6 +7,7 @@ class SubscriptionScheduledCancellationRemoved extends WebhookEvent {
   }
 
   async run(event) {
+    console.info('Subscription cancellation schedule removed!');
     const content = event.content;
     const user = await this.client.discordManager.getUser(content.customer.id);
     const data = {

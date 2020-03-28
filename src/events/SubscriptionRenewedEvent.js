@@ -7,6 +7,7 @@ class SubscriptionRenewedEvent extends WebhookEvent {
   }
 
   async run() {
+    console.info('Subscription renewed!');
     this.client.summaryHandler.cache.subscriptionRenewals++;
   }
 }
