@@ -1,5 +1,7 @@
 const WebhookEvent = require('../../lib/webhook/events/WebhookEvent');
 
+const ms = require('ms');
+
 class SubscriptionCancellationScheduledEvent extends WebhookEvent {
 
   constructor(client) {
@@ -65,6 +67,10 @@ class SubscriptionCancellationScheduledEvent extends WebhookEvent {
 
   formatDate(date) {
     return new Date(date * 1000).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' });
+  }
+
+  formatTime(time) {
+    return ms(time * 1000, { long: true });
   }
 }
 
